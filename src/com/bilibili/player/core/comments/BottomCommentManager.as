@@ -1,0 +1,35 @@
+package com.bilibili.player.core.comments
+{
+	import com.bilibili.player.core.utils.GeneralFactory;
+	import com.bilibili.player.events.CommentDataEvent;
+    import flash.display.Sprite;
+    //
+    //import org.lala.event.*;
+    //import org.lala.net.*;
+    //import org.lala.utils.*;
+
+    /** 底部字幕管理者 **/
+    public class BottomCommentManager extends CommentManager
+    {
+        /** 构造函数 **/
+        public function BottomCommentManager(clip:Sprite)
+        {
+            super(clip);
+        }
+        /**
+         * 设置空间管理者
+         **/
+        override protected function setSpaceManager():void
+        {
+            this.space_manager = CommentSpaceManager(new BottomCommentSpaceManager());
+			this.commentFactory = new GeneralFactory(Comment, 20, 20);
+        }
+        /**
+         * 设置要监听的模式
+         **/
+        override protected function setModeList():void
+        {
+            this.mode_list.push(CommentDataEvent.BOTTOM);
+        }
+    }
+}
