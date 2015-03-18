@@ -1,8 +1,9 @@
 package com.lizeqiangd.zweisystem.interfaces.baseunit
 {
-	import com.bilibili.player.system.config.BPFilter;
+	//import com.bilibili.player.system.config.BPFilter;
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.filters.GlowFilter;
 	
 	/**
 	 * 任何显示对象的基本项.
@@ -51,7 +52,7 @@ package com.lizeqiangd.zweisystem.interfaces.baseunit
 			sp_frame.graphics.lineTo(getUiWidth, getUiHeight)
 			sp_frame.graphics.lineTo(0, getUiHeight)
 			sp_frame.graphics.lineTo(0, 0)
-			sp_frame.filters = needFilter ? [BPFilter.DefaultLightblueGlowFilter] : []
+			sp_frame.filters = needFilter ? [new GlowFilter(0x3399ff, 1, 5, 5, 1, 1)] : []
 			//setChildIndex(sp_frame, numChildren - 1)
 		}
 		

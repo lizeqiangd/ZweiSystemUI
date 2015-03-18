@@ -89,6 +89,7 @@ package com.lizeqiangd.zweisystem.interfaces.checkbox
 			_seleted = !_seleted
 			sp_selectedPointer.visible = _seleted
 			dispatchEvent(new UIEvent(UIEvent.SELECTED, _seleted))
+			dispatchEvent(new UIEvent(UIEvent.CLICK, _seleted))
 		}
 		
 		override public function onMouseDown(e:MouseEvent):void
