@@ -52,10 +52,13 @@ package com.lizeqiangd.zweisystem.interfaces.baseunit
 			sp_frame.graphics.lineTo(getUiWidth, getUiHeight)
 			sp_frame.graphics.lineTo(0, getUiHeight)
 			sp_frame.graphics.lineTo(0, 0)
-			sp_frame.filters = needFilter ? [new GlowFilter(0x3399ff, 1, 5, 5, 1, 1)] : []
+			createFreameFilter(needFilter)
 			//setChildIndex(sp_frame, numChildren - 1)
 		}
 		
+		public function createFreameFilter(needFilter:Boolean = true):void {
+			sp_frame.filters = needFilter ? [new GlowFilter(0x3399ff, 1, 5, 5, 1, 1)] : []
+		}
 		/**
 		 * 设置边框的颜色(不会重新绘制,请调用createFrame() )
 		 */
