@@ -1,4 +1,4 @@
-﻿package com.lizeqiangd.zweisystem.interfaces.scrollpane(hold)(hold)
+﻿package com.lizeqiangd.zweisystem.interfaces.scrollbar
 {
 	/*
 	  双向(横板+竖版)滚动条
@@ -11,10 +11,10 @@
 	import flash.geom.Rectangle;
 	import flash.utils.Timer;
 	//特别针对EinStation优化的项目
-	import com.zweisystem.system.proxy.StageProxy
+	//import com.zweisystem.system.proxy.StageProxy
 	import flash.text.TextField;
 
-	public class ScrollBarCore
+	public class sb_hexagon_core
 	{
 		public static const H = "H";
 		public static const L = "L";
@@ -159,7 +159,7 @@
 		* @param$mouseWheel   Boolean               * 滚轮可用
 		* @param$direction    String               * 方向(默认纵向)
 		*/
-		public function ScrollBarCore($target:*, $maskTarget:*, $scrollBar:Sprite, $scrollLine:Sprite, $tween:Number = 0, $elastic:Boolean = true, $lineAbleClick:Boolean = false, $mouseWheel:Boolean = true, $direction:String = "L",$textMode=false)
+		public function sb_hexagon_core($target:*, $maskTarget:*, $scrollBar:Sprite, $scrollLine:Sprite, $tween:Number = 0, $elastic:Boolean = true, $lineAbleClick:Boolean = false, $mouseWheel:Boolean = true, $direction:String = "L",$textMode=false)
 		{
 			if (! $textMode)
 			{
@@ -410,11 +410,11 @@
 		{
 			if (state=="start")
 			{
-				StageProxy.stage.addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheelHandler, false, 0, true );
+				//StageProxy.stage.addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheelHandler, false, 0, true );
 			}
 			else if (state == "stop")
 			{
-				StageProxy.stage.removeEventListener(MouseEvent.MOUSE_WHEEL, mouseWheelHandler);
+				//StageProxy.stage.removeEventListener(MouseEvent.MOUSE_WHEEL, mouseWheelHandler);
 			}
 		}
 		private function makeScrollBar():void
@@ -434,8 +434,8 @@
 			}
 			_scrollBar.addEventListener(MouseEvent.MOUSE_DOWN,              scrollBarMouseDownHandler, false, 0, true );
 			_scrollBar.addEventListener(MouseEvent.MOUSE_UP,                scrollBarMouseUpHandler, false, 0, true );
-			StageProxy.stage.addEventListener(MouseEvent.MOUSE_UP,   scrollBarMouseUpHandler, false, 0, true );
-			StageProxy.stage.addEventListener(Event.MOUSE_LEAVE,       scrollBarMouseUpHandler, false, 0, true );
+			//StageProxy.stage.addEventListener(MouseEvent.MOUSE_UP,   scrollBarMouseUpHandler, false, 0, true );
+			//StageProxy.stage.addEventListener(Event.MOUSE_LEAVE,       scrollBarMouseUpHandler, false, 0, true );
 
 		}
 

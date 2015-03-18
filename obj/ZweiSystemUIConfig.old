@@ -42,8 +42,8 @@
   <file-specs>
     <path-element>D:\wy\code\lizeqiangd\as3\ZweiSystemUI\src\EinStationUserInterface.as</path-element>
   </file-specs>
-  <default-background-color>#C0C0C0</default-background-color>
-  <default-frame-rate>30</default-frame-rate>
+  <default-background-color>#4F4F4F</default-background-color>
+  <default-frame-rate>60</default-frame-rate>
   <default-size>
     <width>800</width>
     <height>600</height>

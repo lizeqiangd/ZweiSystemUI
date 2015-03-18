@@ -6,11 +6,12 @@ package com.lizeqiangd.zweisystem.interfaces.label.special
 	 * ...
 	 * @author Lizeqiangd
 	 */
-	public class la_PPtextLabel extends Sprite
+	public class la_psychopass extends Sprite
 	{
 		public function set title(e:String)
 		{
 			this.tx_title.text = e
+			this.mc_bg.width=this.tx_title.textWidth+5
 		}
 		
 		public function get title():String

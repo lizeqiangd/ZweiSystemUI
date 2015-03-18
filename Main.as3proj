@@ -4,14 +4,14 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="bin\ZweiSystemUI.swf" />
+    <movie path="bin\Main.swf" />
     <movie fps="60" />
     <movie width="800" />
     <movie height="600" />
-    <movie version="14" />
+    <movie version="11" />
     <movie minorVersion="0" />
     <movie platform="Flash Player" />
-    <movie background="#4F4F4F" />
+    <movie background="#2D2D2D" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
@@ -27,7 +27,7 @@
     <option inline="False" />
     <option locale="" />
     <option loadConfig="" />
-    <option optimize="True" />
+    <option optimize="False" />
     <option omitTraces="True" />
     <option showActionScriptWarnings="True" />
     <option showBindingWarnings="True" />
@@ -52,6 +52,7 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
+    <element path="src\libs" />
     <element path="assest\EinStationUI.swc" />
   </libraryPaths>
   <!-- External Libraries -->
@@ -76,6 +77,7 @@
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
+    <hidden path=".settings" />
     <hidden path="obj" />
   </hiddenPaths>
   <!-- Executed before build -->

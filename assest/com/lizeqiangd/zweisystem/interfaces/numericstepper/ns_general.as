@@ -19,23 +19,23 @@
 	 * //输出now数值,从0开始,但是显示是1.你懂的哇~
 	 * }
 	 * 2014.03.18 完全重做界面,同时更改逻辑,使得..我..更容易用..啧啧真是可怜..就我在用 笑嘻嘻.
-	 * 2015.03.09 删除依赖库
+	 * 2015.03.09 删除依赖库,修改语言规范,修改逻辑,注释冗余代码.
 	 * @author Lizeqiangd
 	 *
 	 */
 	public class ns_general extends Sprite
 	{
-		private var _step:int = 0;
-		private var _now:int = 1;
+		private var _step:int = 1;
+		private var _now:int = 0;
 		private var _total:int = 100;
 		private var lastText:String = "";
-		private var state:String = "init";
+		//private var state:String = "init";
 		
 		public function ns_general()
 		{
 			text = "未定义";
 			addUiListener();
-			this.state = "ready";
+			//this.state = "ready";
 		}
 		
 		private function addUiListener()
@@ -90,8 +90,8 @@
 		
 		private function onLeft(e:MouseEvent)
 		{
-			if (state == "ready")
-			{
+			//if (state == "ready")
+			//{
 				if (_total <= _step)
 				{
 					return;
@@ -102,13 +102,13 @@
 					_now = 0
 				}
 				this.changer();
-			}
+			//}
 		}
 		
 		private function onRight(e:MouseEvent)
 		{
-			if (state == "ready")
-			{
+			//if (state == "ready")
+			//{
 				
 				if (_total <= _step)
 				{
@@ -120,7 +120,7 @@
 				}
 				_now += _step;
 				this.changer();
-			}
+			//}
 		}
 		
 		/**
@@ -136,12 +136,12 @@
 			if (_total <= (_now + _step))
 			{
 				//text = "(" + int(_now + 1) + "-" + _total + ")/" + _total;
-				text = int(_now + 1) + "/" + _total;
+				text = int(_now /*+ 1*/) + "/" + _total;
 			}
 			if (_now + _step < _total)
 			{
 				//text = "(" + int(_now + 1) + "-" + int(_now + _step) + ")/" + _total;
-				text = int(_now + 1) + "/" + _total;
+				text = int(_now /*+ 1*/) + "/" + _total;
 			}
 			this.dispatchEvent(new UIEvent(UIEvent.CHANGE, _now));
 		}

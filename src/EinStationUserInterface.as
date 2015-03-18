@@ -14,8 +14,11 @@ package
 	import com.lizeqiangd.zweisystem.interfaces.checkbox.cb_hexagon
 	import com.lizeqiangd.zweisystem.interfaces.label.la_general;
 	import com.lizeqiangd.zweisystem.interfaces.label.la_rect;
+	import com.lizeqiangd.zweisystem.interfaces.label.special.la_psychopass;
 	import com.lizeqiangd.zweisystem.interfaces.numericstepper.ns_general;
 	import com.lizeqiangd.zweisystem.interfaces.numericstepper.ns_number;
+	import com.lizeqiangd.zweisystem.interfaces.progressbar.pb_icon;
+	import com.lizeqiangd.zweisystem.interfaces.scrollbar.sb_core;
 	import com.lizeqiangd.zweisystem.manager.SkinManager;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -41,7 +44,7 @@ package
 		private function onSkinLoadComplete(e:Event = null):void
 		{
 			var button_class_arr:Array = []
-			button_class_arr = [btn_general, btn_general_s, btn_label, btn_rect, btn_hexagon, cb_content, cb_emission, btn_content_hexagon, cb_hexagon, btn_psychopass, cb_general, la_general, la_rect]
+			button_class_arr = [btn_general, btn_general_s, btn_label, btn_rect, btn_hexagon, cb_content, cb_emission, btn_content_hexagon, cb_hexagon, btn_psychopass, cb_general, la_general, la_rect, la_psychopass]
 			for (var i:int = 0; i < button_class_arr.length; i++)
 			{
 				var temp:* = new (button_class_arr[i] as Class)
@@ -56,17 +59,30 @@ package
 					})
 			}
 			var ns_numbers:ns_number = new ns_number
-			ns_numbers.setMax = 100
 			addChild(ns_numbers)
 			ns_numbers.x = 200
-			ns_numbers.y = 250
+			ns_numbers.y = 300
 			
 			var ns_generals:ns_general = new ns_general
-			ns_generals.setMax = 100
 			addChild(ns_generals)
 			ns_generals.x = 200
-			ns_generals.y = 280
-		
+			ns_generals.y = 330
+			
+			var pb_icons:pb_icon = new pb_icon
+			addChild(pb_icons)
+			pb_icons.title = '66'
+			pb_icons.x = 210
+			pb_icons.y = 360
+			
+			var sb_cores:sb_core = new sb_core
+			sb_cores.configHeight(500)
+			sb_cores.setDisplayHeight = 300
+			sb_cores.setTotalHeight = 400
+			sb_cores.setNowDisplayTop = 100
+			sb_cores.x = 150
+			sb_cores.y=10
+			addChild(sb_cores)
+			
 		}
 	
 	}
