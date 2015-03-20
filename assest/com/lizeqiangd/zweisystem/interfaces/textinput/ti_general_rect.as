@@ -1,8 +1,7 @@
 ﻿package com.lizeqiangd.zweisystem.interfaces.textinput
 {
-	
-	import com.lizeqiangd.zweisystem.system.config.ESFilter;
 	import flash.display.MovieClip;
+	import flash.filters.GlowFilter;
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
 	import flash.display.Sprite;
@@ -24,30 +23,30 @@
 		}
 		
 		[Inspectable(name="textWidth",type="Number",defaultValue=140)]
-		public function set textWidth(v:Number)
+		public function set textWidth(v:Number):void
 		{
 			this.tx_title.width = v;
 			createFrame();
 		}
 		
-		private function createFrame()
+		private function createFrame():void
 		{
 			mc_frame.graphics.clear();
 			mc_frame.graphics.lineStyle(1, 0xFF9900);
 			mc_frame.graphics.drawRect(0, 0, width, height);
 			mc_frame.graphics.endFill();
 			addChild(mc_frame);
-			mc_frame.filters = [ESFilter.DefaultOrangeGlowFilter]
+			mc_frame.filters = [new GlowFilter(0xFF9900, 1, 5, 5, 1, 1)]
 		}
 		
 		[Inspectable(name="password",type="Boolean",defaultValue=false)]
-		public function set password(v:Boolean)
+		public function set password(v:Boolean):void
 		{
 			this.tx_title.displayAsPassword = v;
 		}
 		
 		[Inspectable(name="text",type="String",defaultValue="")]
-		public function set text(s:String)
+		public function set text(s:String):void
 		{
 			this.tx_title.text = s;
 		}
@@ -57,7 +56,7 @@
 			return this.tx_title.text;
 		}
 		
-		public function clear()
+		public function clear():void
 		{
 			this.tx_title.text = "";
 		}

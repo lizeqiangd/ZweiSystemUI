@@ -1,6 +1,6 @@
 ﻿package com.lizeqiangd.zweisystem.interfaces.textinput
 {
-	import com.lizeqiangd.zweisystem.events.UnitEvent;
+	import com.lizeqiangd.zweisystem.events.UIEvent;
 	import flash.display.Sprite;
 	import flash.events.KeyboardEvent;
 	import flash.events.TextEvent;
@@ -22,7 +22,7 @@
 		{
 			if (e.keyCode == Keyboard.ENTER)
 			{
-				dispatchEvent(new UnitEvent(UnitEvent.SUBMIT, tx_title.text))
+				dispatchEvent(new UIEvent(UIEvent.SUBMIT, tx_title.text))
 			}
 		}
 		
@@ -30,7 +30,7 @@
 		 * 设置为密码显示模式.
 		 */
 		[Inspectable(name="password",type="Boolean",defaultValue=false)]
-		public function set password(v:Boolean)
+		public function set password(v:Boolean):void
 		{
 			this.tx_title.displayAsPassword = v;
 		}
@@ -39,7 +39,7 @@
 		 * 获取文本文字.
 		 */
 		[Inspectable(name="title",type="String",defaultValue="")]
-		public function set title(s:String)
+		public function set title(s:String):void
 		{
 			this.tx_title.text = s;
 		}
@@ -47,7 +47,7 @@
 		/*
 		 * 获取文本文字.
 		 */
-		public function set text(s:String)
+		public function set text(s:String):void
 		{
 			this.tx_title.text = s;
 		}
@@ -73,7 +73,7 @@
 			return tx_title
 		}
 		
-		public function clear()
+		public function clear():void
 		{
 			this.tx_title.text = "";
 		}

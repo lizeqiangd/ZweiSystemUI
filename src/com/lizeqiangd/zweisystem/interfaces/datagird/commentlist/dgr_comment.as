@@ -74,21 +74,7 @@ package com.lizeqiangd.zweisystem.interfaces.datagird.commentlist
 			}
 		}
 		
-		private function cherkVariableExist(e:String):Boolean
-		{
-			try
-			{
-				if (data[indexInDataGird][e])
-				{
-					return true
-				}
-			}
-			catch (e:*)
-			{
-				
-			}
-			return false
-		}
+		
 			override public function onMouseOut(e:MouseEvent):void
 		{
 			if (cherkVariableExist(BPSetting.ValueObject_DataGirdSelected))

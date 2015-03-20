@@ -42,6 +42,7 @@ package com.lizeqiangd.zweisystem.interfaces.baseunit
 					isEnable = true;
 					onMouseUp(null)
 					addUiListener();
+					this.alpha=0.4
 				}
 			}
 			else
@@ -51,6 +52,7 @@ package com.lizeqiangd.zweisystem.interfaces.baseunit
 					isEnable = false;
 					sp_click.alpha = 0.05;
 					removeUiListener();
+					this.alpha=1
 				}
 			}
 		}

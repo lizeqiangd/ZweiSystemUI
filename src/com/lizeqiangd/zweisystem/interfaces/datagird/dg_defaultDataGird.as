@@ -1,11 +1,10 @@
 package com.lizeqiangd.zweisystem.interfaces.datagird 
 {
-	import com.bilibili.player.abstract.datagird.BaseDataGird;
-	import com.bilibili.player.abstract.datagird.iDataGirdRow;
 	import com.lizeqiangd.zweisystem.interfaces.baseunit.BaseUI;
 	import com.lizeqiangd.zweisystem.events.UIEvent;
-	import com.bilibili.player.interfaces.scrollbar.sb_core;
-	import com.bilibili.player.system.config.BPSetting;
+	import com.lizeqiangd.zweisystem.interfaces.baseunit.datagird.BaseDataGird;
+	import com.lizeqiangd.zweisystem.interfaces.baseunit.datagird.iDataGirdRow;
+	import com.lizeqiangd.zweisystem.interfaces.scrollbar.sb_core;
 	
 	/**
 	 * 二次封装过后的datagird模型.
@@ -26,6 +25,8 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 	 */
 	public class dg_defaultDataGird extends BaseUI
 	{
+		
+		
 		///内部条目的核心管理器.
 		private var dg_core:BaseDataGird
 		///滚动条
@@ -57,7 +58,7 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 		/**
 		 * 移除所有datagird方法
 		 */
-		private function removeDataGirdEventListener()
+		private function removeDataGirdEventListener():void
 		{
 			
 			sb_datagird.removeEventListener(UIEvent.CHANGE, onScrollBarChanged)
@@ -77,21 +78,24 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 				i = 0
 				for (; i < dg_core.dataProvider.length; i++)
 				{
-					dg_core.dataProvider[i][BPSetting.ValueObject_DataGirdSelected] = false
+					dg_core.dataProvider[i][BaseDataGird.ValueObject_DataGirdSelected] = false
 				}
 			}
 			if (e.data.shiftKey)
 			{
-				dg_core.dataProvider[lastSelectedIndexInDataProvider][BPSetting.ValueObject_DataGirdSelected] = true
+				dg_core.dataProvider[lastSelectedIndexInDataProvider][BaseDataGird.ValueObject_DataGirdSelected] = true
 				for (i = lastSelectedIndexInDataProvider; i != e.data.selectIndex; )
 				{
 					i > e.data.selectIndex ? i-- : i++
-					dg_core.dataProvider[i][BPSetting.ValueObject_DataGirdSelected] = true
+					dg_core.dataProvider[i][BaseDataGird.ValueObject_DataGirdSelected] = true
 				}
 			}
 			else
 			{
-				dg_core.dataProvider[e.data.selectIndex][BPSetting.ValueObject_DataGirdSelected] = !dg_core.dataProvider[e.data.selectIndex][BPSetting.ValueObject_DataGirdSelected]
+				if (e.data.selectIndex >= dg_core.dataProvider.length) {
+					return;
+				}
+				dg_core.dataProvider[e.data.selectIndex][BaseDataGird.ValueObject_DataGirdSelected] = !dg_core.dataProvider[e.data.selectIndex][BaseDataGird.ValueObject_DataGirdSelected]
 			}
 			
 			//保存当前点击的位置,用于下一次使用shift
@@ -100,7 +104,7 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 			selectedArray = []
 			for (i = 0; i < dg_core.dataProvider.length; i++)
 			{
-				if (dg_core.dataProvider[i][BPSetting.ValueObject_DataGirdSelected])
+				if (dg_core.dataProvider[i][BaseDataGird.ValueObject_DataGirdSelected])
 				{
 					selectedArray.push(i)
 				}
@@ -175,7 +179,7 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 			dg_core.dataProvider = e
 			for (var i:int =0; i < dg_core.dataProvider.length; i++)
 			{
-				dg_core.dataProvider[i][BPSetting.ValueObject_DataGirdSelected] = false
+				dg_core.dataProvider[i][BaseDataGird.ValueObject_DataGirdSelected] = false
 			}
 			update()
 		}
