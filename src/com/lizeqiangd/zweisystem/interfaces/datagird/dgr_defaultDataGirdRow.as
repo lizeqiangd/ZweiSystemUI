@@ -68,6 +68,10 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 				//tx_1.text = data[indexInDataGird].id + ""
 				//tx_2.text = data[indexInDataGird].type + ""
 				//tx_3.text =data[indexInDataGird].title			
+			}else {
+				tx_1.text = ''
+				tx_2.text =''
+				tx_3.text =''
 			}
 			cherkSelected()
 		}

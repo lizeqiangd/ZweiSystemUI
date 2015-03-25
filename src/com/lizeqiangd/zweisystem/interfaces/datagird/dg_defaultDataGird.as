@@ -22,6 +22,7 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 	 * 
 	 * @author Lizeqiangd
 	 * 20150107 将弹幕和屏蔽列表和下拉框代码复用处整合.
+	 * 20150324 修正点击空白位置时候的bug
 	 */
 	public class dg_defaultDataGird extends BaseUI
 	{
@@ -72,7 +73,9 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 		private function onRowsSelected(e:UIEvent):void
 		{
 			var i:int = 0
-			
+			if (e.data.selectIndex >= dg_core.dataProvider.length) {
+				return 				
+			}
 			if (!e.data.ctrlKey)
 			{
 				i = 0
