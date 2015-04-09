@@ -18,11 +18,16 @@ package com.lizeqiangd.zweisystem.interfaces.textinput
 			configBaseUi(200, 50)
 			tf = new TextField
 			tf.multiline = true
-			tf.wordWrap=true
-			tf.type='input'
+			tf.wordWrap = true
+			tf.type = 'input'
 			tf.defaultTextFormat = new TextFormat("微软雅黑", 12, 0xff9900)
 			addChild(tf)
-			createFrame(true)	
+			createFrame(true)
+		}
+		
+		public function removeFrame():void
+		{
+			removeChild(sp_frame)
 		}
 		
 		public function config(w:Number, h:Number):void
@@ -30,7 +35,7 @@ package com.lizeqiangd.zweisystem.interfaces.textinput
 			configBaseUi(w, h)
 			tf.width = w
 			tf.height = h
-			createFrame(true)			
+			createFrame(true)
 		}
 		
 		public function set text(s:String):void
@@ -51,6 +56,10 @@ package com.lizeqiangd.zweisystem.interfaces.textinput
 		public function get text():String
 		{
 			return this.title;
+		}
+		
+		public function get textfield():TextField {
+			return this.tf
 		}
 	}
 
