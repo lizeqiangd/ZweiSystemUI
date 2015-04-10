@@ -1,6 +1,5 @@
 package com.lizeqiangd.zweisystem.interfaces.baseunit
 {
-	//import com.bilibili.player.system.config.BPFilter;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.filters.GlowFilter;
@@ -9,6 +8,7 @@ package com.lizeqiangd.zweisystem.interfaces.baseunit
 	 * 任何显示对象的基本项.
 	 * @author Lizeqiangd
 	 * 2014.10.16:重新绘制边框的时候会让边框置顶.
+	 * 2015.04.10:阴影的绘制自动识别框体颜色.
 	 */
 	public class BaseUI extends Sprite
 	{
@@ -53,11 +53,10 @@ package com.lizeqiangd.zweisystem.interfaces.baseunit
 			sp_frame.graphics.lineTo(0, getUiHeight)
 			sp_frame.graphics.lineTo(0, 0)
 			createFreameFilter(needFilter)
-			//setChildIndex(sp_frame, numChildren - 1)
 		}
 		
 		public function createFreameFilter(needFilter:Boolean = true):void {
-			sp_frame.filters = needFilter ? [new GlowFilter(0x3399ff, 1, 5, 5, 1, 1)] : []
+			sp_frame.filters = needFilter ? [new GlowFilter(color_frame, 1, 5, 5, 1, 1)] : []
 		}
 		/**
 		 * 设置边框的颜色(不会重新绘制,请调用createFrame() )
