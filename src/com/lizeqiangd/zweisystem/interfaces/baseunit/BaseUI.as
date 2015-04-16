@@ -14,7 +14,7 @@ package com.lizeqiangd.zweisystem.interfaces.baseunit
 	{
 		public var sp_frame:Shape
 		public var sp_background:Sprite
-		private var color_frame:uint = 0x00c2fb
+		private var color_frame:uint = 0x6699ff
 		private var color_background:uint = 0xffffff
 		
 		private var baseUiWidth:Number = 40
