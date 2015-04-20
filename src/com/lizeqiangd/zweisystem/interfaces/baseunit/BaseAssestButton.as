@@ -71,6 +71,14 @@ package com.lizeqiangd.zweisystem.interfaces.baseunit
 				tx_textfield.text = s;
 			}
 		}
+		public function get title():String
+		{
+			if (tx_textfield)
+			{
+				return tx_textfield.text;
+			}
+			return '';
+		}
 		
 		override public function onMouseDown(e:MouseEvent):void
 		{
