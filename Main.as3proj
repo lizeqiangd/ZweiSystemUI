@@ -87,8 +87,8 @@
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="False" />
-    <option testMovie="Default" />
-    <option testMovieCommand="" />
+    <option testMovie="OpenDocument" />
+    <option testMovieCommand="D:\wy\code\lizeqiangd\project\player_plugin\baseframework\as3\BaseFramework\bin\index.html" />
   </options>
   <!-- Plugin storage -->
   <storage />
