@@ -14,10 +14,12 @@ package com.lizeqiangd.zweisystem.interfaces.mousetips
 	 * 使用前需要初始化,以保证不初始化不会占用内存.
 	 * 本类可以控制为 非动画模式,需要注释掉整个tweenlite和响应的方法.
 	 * 已经删除tweenlite
-	 * 
+	 *
 	 * @author Lizeqiangd
 	 * 2015.01.12 添加工具,增加动画模式
 	 * 2015.03.06 移除所有依赖库,可独立使用,删除tweenlite依赖
+	 * 2015.06.18 修复消失的时候移动会强制消失的bug
+	 * 2015.06.19 稳定性修正,性能和逻辑修正.
 	 */
 	public class GlobalMouseTips
 	{
@@ -25,34 +27,35 @@ package com.lizeqiangd.zweisystem.interfaces.mousetips
 		private static var mt:mt_general
 		private static var isinited:Boolean = false
 		private static var hideTimer:Timer
-		//private static var hideAnime:TweenLite
+		private static var hide_anime_timeout:uint = 0
+		
 		/**
-		 * 初始化本功能
+		 * 初始化本功能,需要输入对本类支持的舞台.
 		 */
 		public static function init(s:Stage):void
 		{
 			if (isinited)
 			{
-				//trace('GloablMouseTips:already inited')
+				trace('GloablMouseTips:already inited')
 				return
 			}
-			_stage=s
-			isinited=true
+			_stage = s
+			isinited = true
 			mt = new mt_general
-			_stage.addChild(mt)
-			
-			mt.visible = false
-			hideTimer = new Timer(3000, 1)
+			//_stage.addChild(mt)
+			//mt.alpha=false
+			mt.mouseChildren = false
+			mt.mouseEnabled = false
+			hideTimer = new Timer(2500, 1)
 			hideTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onHideTimerComplete)
-			
-			_stage.addEventListener(Event.ADDED,onSomethingAddToStage)
+			_stage.addEventListener(Event.ADDED, onSomethingAddToStage)
 		}
 		
 		/**
 		 * 重新恢复至舞台顶层
 		 * @param	e
 		 */
-		static private function onSomethingAddToStage(e:Event):void 
+		static private function onSomethingAddToStage(e:Event):void
 		{
 			//_stage.setChildIndex(mt, _stage.numChildren -1);
 		}
@@ -72,21 +75,16 @@ package com.lizeqiangd.zweisystem.interfaces.mousetips
 				return
 			}
 			mt.text = text;
-			var mt_y:Number =y
-			var mt_x:Number = x 
+			var mt_y:Number = y
+			var mt_x:Number = x
 			if (autoFixPosition)
 			{
 				mt_x = mt_x > _stage.stageWidth - mt.width ? _stage.stageWidth - mt.width - 5 : mt_x
 				mt_x = mt_x < 0 ? 0 : mt_x
 			}
-			mt.alpha = 1
-			mt.visible = true
-			
 			mt.x = mt_x
 			mt.y = mt_y
-			hideTimer.reset()
-			hideTimer.start()
-			//trace(text, 'd tips on');
+			showMouseTips()
 		}
 		
 		/**
@@ -121,15 +119,9 @@ package com.lizeqiangd.zweisystem.interfaces.mousetips
 			mt_y = mt_y > _stage.stageHeight + mt.height ? display.y - 2 - mt.height : mt_y
 			mt_x = mt_x > _stage.stageWidth - mt.width ? _stage.stageWidth - mt.width - 5 : mt_x
 			mt_x = mt_x < 0 ? 0 : mt_x
-			
-			mt.alpha = 1
-			mt.visible = true
-			
 			mt.x = mt_x
 			mt.y = mt_y
-			hideTimer.reset()
-			hideTimer.start()
-			//trace(text, 'tips on');
+			showMouseTips()
 		}
 		
 		/**
@@ -142,21 +134,42 @@ package com.lizeqiangd.zweisystem.interfaces.mousetips
 				//trace('GloablMouseTips:need init')
 				return
 			}
-			//TweenLite.to(mt, 0.5, {autoAlpha: 0})
-			//mt.visible = false
-			var timer_int:uint = setInterval(function():void {
-				mt.alpha -= 0.2;
-				if (mt.alpha <= 0) {
-					mt.visible = false;
-					clearInterval(timer_int);
-				}
-			},100)
-			hideTimer.stop()
+			onHideTimerComplete(null)
+			//clearInterval(hide_anime_timeout);
+			//hide_anime_timeout = setInterval(function():void
+			//{
+			//mt.alpha -= 0.05;
+			//if (mt.alpha <= 0)
+			//{
+			//_stage.removeChild(mt);
+			//clearInterval(hide_anime_timeout);
+			//}
+			//}, 25)
+			//hideTimer.stop()
 		}
 		
 		static private function onHideTimerComplete(e:TimerEvent):void
 		{
-			mt.visible = false
+			clearInterval(hide_anime_timeout);
+			hide_anime_timeout = setInterval(function():void
+			{
+				mt.alpha -= 0.05;
+				if (mt.alpha <= 0)
+				{
+					_stage.removeChild(mt);
+					clearInterval(hide_anime_timeout);
+				}
+			}, 25)
+			hideTimer.stop()
+		}
+		
+		static private function showMouseTips():void
+		{
+			_stage.addChild(mt)
+			mt.alpha = 1
+			clearInterval(hide_anime_timeout)
+			hideTimer.reset()
+			hideTimer.start()
 		}
 	}
 

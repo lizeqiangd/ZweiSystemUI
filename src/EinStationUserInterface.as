@@ -15,10 +15,15 @@ package
 	import com.lizeqiangd.zweisystem.interfaces.label.la_general;
 	import com.lizeqiangd.zweisystem.interfaces.label.la_rect;
 	import com.lizeqiangd.zweisystem.interfaces.label.special.la_psychopass;
+	import com.lizeqiangd.zweisystem.interfaces.mousetips.GlobalMouseTips;
 	import com.lizeqiangd.zweisystem.interfaces.numericstepper.ns_general;
 	import com.lizeqiangd.zweisystem.interfaces.numericstepper.ns_number;
 	import com.lizeqiangd.zweisystem.interfaces.progressbar.pb_icon;
 	import com.lizeqiangd.zweisystem.interfaces.scrollbar.sb_core;
+	import com.lizeqiangd.zweisystem.interfaces.slider.sl_general;
+	import com.lizeqiangd.zweisystem.interfaces.slider.sl_general_rect;
+	import com.lizeqiangd.zweisystem.interfaces.slider.sld_general;
+	import com.lizeqiangd.zweisystem.interfaces.slider.sld_videoprogressbar;
 	import com.lizeqiangd.zweisystem.manager.SkinManager;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -54,9 +59,9 @@ package
 				temp.x = 10 + Math.floor(i / 8) * 200
 				temp.y = 10 + (i % 8) * 50
 				temp.addEventListener(UIEvent.CLICK, function(e:*):void
-					{
-						trace(e.target)
-					})
+				{
+					trace(e.target)
+				})
 			}
 			var ns_numbers:ns_number = new ns_number
 			addChild(ns_numbers)
@@ -80,11 +85,33 @@ package
 			sb_cores.setTotalHeight = 400
 			sb_cores.setNowDisplayTop = 100
 			sb_cores.x = 150
-			sb_cores.y=10
+			sb_cores.y = 10
 			addChild(sb_cores)
 			
+			//var slider1:sl_general
+			//slider1.x = 430
+			//slider1.y = 20
+			//addChild(slider1)
+			
+			//var slider2:sl_general_rect
+			//slider1.x = 430
+			//slider1.y = 40
+			//addChild(slider2)
+			
+			var slider3:sld_general=new sld_general
+			slider3.x = 430
+			slider3.y = 60
+			addChild(slider3)
+			
+			var slider4:sld_videoprogressbar=new sld_videoprogressbar
+			slider4.x = 430
+			slider4.y = 80
+			addChild(slider4)
+			slider4.setMax=(100)
+			slider4.setBuffer=(75)
+			slider4.setPlayed=(50)
+			
+			GlobalMouseTips.init(this.stage)
 		}
-	
 	}
-
 }

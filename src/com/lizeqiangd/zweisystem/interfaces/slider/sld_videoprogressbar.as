@@ -1,11 +1,11 @@
 package com.lizeqiangd.zweisystem.interfaces.slider
 {
 	import com.lizeqiangd.zweisystem.interfaces.baseunit.BaseUI;
-	import com.bilibili.player.components.encode.DateTimeUtils;
+	import com.lizeqiangd.zweisystem.utils.encode.DateTimeUtils;
 	import com.lizeqiangd.zweisystem.events.UIEvent;
 	import com.lizeqiangd.zweisystem.interfaces.mousetips.GlobalMouseTips;
 	import com.lizeqiangd.zweisystem.manager.SkinManager;
-	import com.bilibili.player.system.proxy.StageProxy;
+	//import com.bilibili.player.system.proxy.StageProxy;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -49,7 +49,7 @@ package com.lizeqiangd.zweisystem.interfaces.slider
 			sp_backgroundBar = new Shape
 			sp_playedBar = new Shape
 			sp_bufferBar = new Shape
-			sp_pointer = (SkinManager.getObject("controller_pointer"))
+			sp_pointer = (SkinManager.getObject("controller_pointer"))?(SkinManager.getObject("controller_pointer")):new Sprite;
 			sp_pointer.mouseChildren = false
 			sp_pointer.mouseEnabled = false
 			sp_pointer.y = 5
@@ -164,14 +164,14 @@ package com.lizeqiangd.zweisystem.interfaces.slider
 			{
 				case MouseEvent.MOUSE_DOWN: 
 					_isMouseDown = true
-					StageProxy.addEventListener(MouseEvent.MOUSE_UP, onMouseEvent)
+					//StageProxy.addEventListener(MouseEvent.MOUSE_UP, onMouseEvent)
 					//StageProxy.addEventListener(MouseEvent.MOUSE_MOVE, onMouseEvent)
 					sp_pointer.x = adjustX
 					break;
 				case MouseEvent.MOUSE_UP: 
 					_isMouseDown = false
 					dispatchEvent(new UIEvent(UIEvent.CHANGE, seekPosition))
-					StageProxy.removeEventListener(MouseEvent.MOUSE_UP, onMouseEvent)
+					//StageProxy.removeEventListener(MouseEvent.MOUSE_UP, onMouseEvent)
 					//StageProxy.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseEvent)
 					break;
 				case MouseEvent.MOUSE_MOVE: 
