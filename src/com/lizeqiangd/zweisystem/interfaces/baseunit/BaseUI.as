@@ -14,8 +14,8 @@ package com.lizeqiangd.zweisystem.interfaces.baseunit
 	{
 		public var sp_frame:Shape
 		public var sp_background:Sprite
-		private var color_frame:uint = 0x6699ff
-		private var color_background:uint = 0xffffff
+		protected var color_frame:uint = 0x6699ff
+		protected var color_background:uint = 0xffffff
 		
 		private var baseUiWidth:Number = 40
 		private var baseUiHeight:Number = 40
@@ -93,6 +93,14 @@ package com.lizeqiangd.zweisystem.interfaces.baseunit
 		public function set setBackGroundColor(e:uint):void
 		{
 			color_background = e
+		}
+		/**
+		 * 获取背景颜色
+		 * @param	e
+		 */
+		public function get getBackGroundColor():uint
+		{
+			return color_background 
 		}
 		
 		/**

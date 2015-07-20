@@ -18,13 +18,34 @@ package com.lizeqiangd.zweisystem.utils.ui
 		private var onOverColor:uint = 0xffffff // BPSetting.DefaultColor_ButtonMouseOver
 		private var onUpColor:uint = 0xffffff //BPSetting.DefaultColor_ButtonMouseUp
 		
+		private var onDownAlpha:Number = 1.0// BPSetting.DefaultColor_ButtonMouseDown 
+		private var onOutAlpha:Number = 0.4 // BPSetting.DefaultColor_ButtonMouseOut
+		private var onOverAlpha:Number = 0.85 // BPSetting.DefaultColor_ButtonMouseOver
+		private var onUpAlpha:Number = 0.4//BPSetting.DefaultColor_ButtonMouseUp
+		
+		/**
+		 * 设置是否使用切换颜色模式
+		 * @param	e
+		 */
+		public var changeColorMode:Boolean = false
+		
+		/**
+		 * 设置是否使用切换alpha模式
+		 * @param	e
+		 */
+		public var changeAlphaMode:Boolean = true
+		private var isMouseOver:Boolean = false
+		
+		/**
+		 * 这里设置开始.
+		 * @param	e
+		 */
 		public function addMouseControlButton(e:InteractiveObject):void
 		{
-			e.addEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown, false, 0, true)
-			e.addEventListener(MouseEvent.MOUSE_UP, onButtonMouseUp, false, 0, true)
-			e.addEventListener(MouseEvent.MOUSE_OUT, onButtonMouseOut, false, 0, true)
-			e.addEventListener(MouseEvent.MOUSE_OVER, onButtonMouseOver, false, 0, true)
-			//TweenLite.to(e, 0, { tint: onOutColor } )
+			e.addEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown)//, false, 0, true)
+			e.addEventListener(MouseEvent.MOUSE_UP, onButtonMouseUp)//, false, 0, true)
+			e.addEventListener(MouseEvent.MOUSE_OUT, onButtonMouseOut)//, false, 0, true)
+			e.addEventListener(MouseEvent.MOUSE_OVER, onButtonMouseOver)//, false, 0, true)
 			onButtonMouseOutHandle(e)
 		}
 		
@@ -34,7 +55,6 @@ package com.lizeqiangd.zweisystem.utils.ui
 			e.removeEventListener(MouseEvent.MOUSE_UP, onButtonMouseUp)
 			e.removeEventListener(MouseEvent.MOUSE_OUT, onButtonMouseOut)
 			e.removeEventListener(MouseEvent.MOUSE_OVER, onButtonMouseOver)
-			//TweenLite.to(e, 0, {tint: onOutColor})
 			onButtonMouseOutHandle(e)
 		}
 		
@@ -45,52 +65,83 @@ package com.lizeqiangd.zweisystem.utils.ui
 			onOverColor = over
 			onUpColor = up
 		}
-		private var isMouseOver:Boolean = false
+		
+		public function configAlpha(down:Number, up:Number, over:Number, out:Number):void
+		{
+			onDownAlpha = down
+			onOutAlpha = out
+			onOverAlpha = over
+			onUpAlpha = up
+		}
 		
 		private function onButtonMouseOver(e:MouseEvent):void
 		{
 			isMouseOver = true
-			//	trace("onButtonMouseOver",onOverColor)
 			var ct:ColorTransform = new ColorTransform
 			ct.color = onOverColor;
-			(e.target as DisplayObject).transform.colorTransform = ct
-			//TweenLite.to(e.target, BPSetting.DefaultAnimationTime_ButtonMouse, {tint: onOverColor})
+			if (changeColorMode)
+			{
+				(e.target as DisplayObject).transform.colorTransform = ct
+			}
+			if (changeAlphaMode)
+			{
+				(e.target as DisplayObject).alpha = onOverAlpha
+			}
 		}
 		
 		private function onButtonMouseUp(e:MouseEvent):void
 		{
-			//trace("onButtonMouseUp",onUpColor)
-			
 			var ct:ColorTransform = new ColorTransform
 			ct.color = isMouseOver ? onOverColor : onUpColor;
-			(e.target as DisplayObject).transform.colorTransform = ct
-			//TweenLite.to(e.target, BPSetting.DefaultAnimationTime_ButtonMouse, {tint: isMouseOver ? onOverColor : onUpColor})
+			if (changeColorMode)
+			{
+				(e.target as DisplayObject).transform.colorTransform = ct
+			}
+			if (changeAlphaMode)
+			{
+				(e.target as DisplayObject).alpha = isMouseOver ? onOverAlpha : onUpAlpha;
+			}
 		}
 		
 		private function onButtonMouseOut(e:MouseEvent):void
 		{
 			isMouseOver = false
-			//trace("onButtonMouseOut",onOverColor)
-			
-			//TweenLite.to(e.target, BPSetting.DefaultAnimationTime_ButtonMouse, {tint: onOutColor})
-			onButtonMouseOutHandle(e.target as InteractiveObject)
+			if (changeColorMode)
+			{
+				onButtonMouseOutHandle(e.target as InteractiveObject)
+			}
+			if (changeAlphaMode)
+			{
+				(e.target as DisplayObject).alpha = onOutAlpha
+			}
 		}
 		
 		private function onButtonMouseOutHandle(e:InteractiveObject):void
 		{
 			var ct:ColorTransform = new ColorTransform
 			ct.color = onOutColor;
-			(e as DisplayObject).transform.colorTransform = ct
-		
+			if (changeColorMode)
+			{
+				(e as DisplayObject).transform.colorTransform = ct
+			}
+			if (changeAlphaMode)
+			{
+				(e as DisplayObject).alpha = onOutAlpha
+			}		
 		}
 		
 		private function onButtonMouseDown(e:MouseEvent):void
 		{
-			//trace("onButtonMouseDown",onDownColor)
 			var ct:ColorTransform = new ColorTransform
 			ct.color = onDownColor;
-			(e.target as DisplayObject).transform.colorTransform = ct
-			//TweenLite.to(e.target, BPSetting.DefaultAnimationTime_ButtonMouse, {tint: onDownColor})
-		}	
+			if (changeColorMode)
+			{
+				(e.target as DisplayObject).transform.colorTransform = ct
+			}
+			if (changeAlphaMode)
+			{
+				(e.target as DisplayObject).alpha = onDownAlpha
+			}
+		}
 	}
 }
