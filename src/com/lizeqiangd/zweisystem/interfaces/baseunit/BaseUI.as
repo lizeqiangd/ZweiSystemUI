@@ -15,7 +15,7 @@ package com.lizeqiangd.zweisystem.interfaces.baseunit
 		public var sp_frame:Shape
 		public var sp_background:Sprite
 		protected var color_frame:uint = 0x6699ff
-		protected var color_background:uint = 0xffffff
+		protected var color_background:uint = 0x000000
 		
 		private var baseUiWidth:Number = 40
 		private var baseUiHeight:Number = 40
@@ -51,13 +51,29 @@ package com.lizeqiangd.zweisystem.interfaces.baseunit
 			sp_frame.graphics.lineTo(getUiWidth, 0)
 			sp_frame.graphics.lineTo(getUiWidth, getUiHeight)
 			sp_frame.graphics.lineTo(0, getUiHeight)
-			sp_frame.graphics.lineTo(0, 0)
+			sp_frame.graphics.lineTo(0, 0);
+			additionFrame(sp_frame);
 			createFreameFilter(needFilter)
 		}
 		
-		public function createFreameFilter(needFilter:Boolean = true):void {
+		/**
+		 * 用于覆盖所使用的操作.
+		 * @param	sp_frames
+		 */
+		public function additionFrame(sp_frames:Shape):void
+		{
+		
+		}
+		
+		/**
+		 * 关闭或打开边框发光
+		 * @param	needFilter
+		 */
+		public function createFreameFilter(needFilter:Boolean = true):void
+		{
 			sp_frame.filters = needFilter ? [new GlowFilter(color_frame, 1, 5, 5, 1, 1)] : []
 		}
+		
 		/**
 		 * 设置边框的颜色(不会重新绘制,请调用createFrame() )
 		 */
@@ -94,13 +110,14 @@ package com.lizeqiangd.zweisystem.interfaces.baseunit
 		{
 			color_background = e
 		}
+		
 		/**
 		 * 获取背景颜色
 		 * @param	e
 		 */
 		public function get getBackGroundColor():uint
 		{
-			return color_background 
+			return color_background
 		}
 		
 		/**

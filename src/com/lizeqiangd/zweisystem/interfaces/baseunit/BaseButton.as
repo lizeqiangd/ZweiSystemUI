@@ -33,7 +33,7 @@ package com.lizeqiangd.zweisystem.interfaces.baseunit
 		/**
 		 * 设置按钮是否可用
 		 */
-		public function set enable(value:Boolean)
+		public function set enable(value:Boolean):void
 		{
 			if (value)
 			{
