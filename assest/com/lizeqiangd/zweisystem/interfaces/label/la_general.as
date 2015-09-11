@@ -8,13 +8,13 @@
 		public var tx_title:TextField;
 
 		[Inspectable(name="title",type="String",defaultValue="")]
-		public function set title(t:String)
+		public function set title(t:String):void
 		{
 			this.tx_title.text = t;
 			tx_title.width = tx_title.textWidth + 10;
 		}
 		
-		public function set text(t:String)
+		public function set text(t:String):void
 		{
 			this.tx_title.text = t;
 			tx_title.width = tx_title.textWidth + 10;

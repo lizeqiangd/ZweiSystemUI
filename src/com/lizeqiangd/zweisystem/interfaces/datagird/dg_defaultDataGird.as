@@ -1,17 +1,18 @@
-package com.lizeqiangd.zweisystem.interfaces.datagird 
+package com.lizeqiangd.zweisystem.interfaces.datagird
 {
 	import com.lizeqiangd.zweisystem.interfaces.baseunit.BaseUI;
 	import com.lizeqiangd.zweisystem.events.UIEvent;
 	import com.lizeqiangd.zweisystem.interfaces.baseunit.datagird.BaseDataGird;
 	import com.lizeqiangd.zweisystem.interfaces.baseunit.datagird.iDataGirdRow;
 	import com.lizeqiangd.zweisystem.interfaces.scrollbar.sb_core;
+	import flash.events.MouseEvent;
 	
 	/**
 	 * 二次封装过后的datagird模型.
 	 * 需要对本类进行config 设置其基础占位大小.可随时调整.
 	 * 使用继承时请输入super(class)
 	 * 或者请直接使用,new的时候附带参数.
-	 * 
+	 *
 	 * 本类使用sb_core组件和 basedatagird组件
 	 * 开发者只需处理几个属性和方法
 	 * config(width,height)  设置宽高(注意滚动条)
@@ -19,14 +20,13 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 	 * topIndex  属性  设置当前顶部条目,用于其他地方遥控挑选弹幕
 	 * dataProvider  只写属性  设置弹幕数据提供者即可 绑定一次即可
 	 * update   当界面属性出现变动的时候,请调用一次,会自动调节.
-	 * 
+	 *
 	 * @author Lizeqiangd
 	 * 20150107 将弹幕和屏蔽列表和下拉框代码复用处整合.
 	 * 20150324 修正点击空白位置时候的bug
 	 */
 	public class dg_defaultDataGird extends BaseUI
 	{
-		
 		
 		///内部条目的核心管理器.
 		private var dg_core:BaseDataGird
@@ -37,11 +37,11 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 		///最后一个点击的数字
 		private var lastSelectedIndexInDataProvider:uint = 0
 		
-		public function dg_defaultDataGird(dataGirdRowClass:Class)
+		public function dg_defaultDataGird(dataGirdRowClass:Class = null)
 		{
 			dg_core = new BaseDataGird()
-			dg_core.configClass(dataGirdRowClass)
-			addChild(dg_core);			
+			dataGirdRowClass ? dg_core.configClass(dataGirdRowClass) : null;
+			addChild(dg_core);
 			sb_datagird = new sb_core()
 			addChild(sb_datagird)
 			addDataGirdEventListener()
@@ -54,6 +54,16 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 		{
 			sb_datagird.addEventListener(UIEvent.CHANGE, onScrollBarChanged)
 			addRowsEventListener(UIEvent.SELECTED, onRowsSelected)
+			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheelHandle)
+		}
+		
+		/**
+		 * 鼠标操作.
+		 * @param	e
+		 */
+		private function onMouseWheelHandle(e:MouseEvent):void
+		{
+			sb_datagird.onMouseWheelHandle(e.delta*3)
 		}
 		
 		/**
@@ -73,8 +83,9 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 		private function onRowsSelected(e:UIEvent):void
 		{
 			var i:int = 0
-			if (e.data.selectIndex >= dg_core.dataProvider.length) {
-				return 				
+			if (e.data.selectIndex >= dg_core.dataProvider.length)
+			{
+				return
 			}
 			if (!e.data.ctrlKey)
 			{
@@ -95,7 +106,8 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 			}
 			else
 			{
-				if (e.data.selectIndex >= dg_core.dataProvider.length) {
+				if (e.data.selectIndex >= dg_core.dataProvider.length)
+				{
 					return;
 				}
 				dg_core.dataProvider[e.data.selectIndex][BaseDataGird.ValueObject_DataGirdSelected] = !dg_core.dataProvider[e.data.selectIndex][BaseDataGird.ValueObject_DataGirdSelected]
@@ -121,7 +133,6 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 		{
 			dg_core.update(uint(e.data / dg_core.getRowHeight))
 		}
-		
 		
 		/**
 		 * 设定核心以及滚动条
@@ -180,7 +191,7 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 		public function set dataProvider(e:Array):void
 		{
 			dg_core.dataProvider = e
-			for (var i:int =0; i < dg_core.dataProvider.length; i++)
+			for (var i:int = 0; i < dg_core.dataProvider.length; i++)
 			{
 				dg_core.dataProvider[i][BaseDataGird.ValueObject_DataGirdSelected] = false
 			}
@@ -203,6 +214,7 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 		{
 			return dg_core.getTopIndex
 		}
+		
 		/**
 		 * 返回当前所选序列.
 		 */
@@ -210,7 +222,7 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 		{
 			return selectedArray
 		}
-		
+	
 	}
 
 }

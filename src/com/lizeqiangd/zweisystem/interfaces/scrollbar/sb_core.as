@@ -8,7 +8,8 @@ package com.lizeqiangd.zweisystem.interfaces.scrollbar
 	import flash.events.MouseEvent;
 	
 	/**
-	 * 滚动条
+	 * 滚动条.基本组件.带绘制基本功能.
+	 *
 	 * @author Lizeqiangd
 	 * 2015.03.09 删除依赖库.
 	 */
@@ -22,9 +23,9 @@ package com.lizeqiangd.zweisystem.interfaces.scrollbar
 		private var nowPosition:Number = 0
 		///目前滑动块的高度
 		private var _pointerHeight:Number = 200
-		///总显示高度
+		///总显示高度大小
 		private var _totalHeight:Number = 0
-		///显示区域的高度
+		///显示区域的高度大小
 		private var _displayHeight:Number = 0
 		///点击背景时候的移动速度
 		private var _speed:Number = 10
@@ -88,11 +89,13 @@ package com.lizeqiangd.zweisystem.interfaces.scrollbar
 			sp_pointer.addEventListener(MouseEvent.MOUSE_OVER, onPointerMouseOver)
 			sp_pointer.addEventListener(MouseEvent.MOUSE_OUT, onPointerMouseOut)
 			sp_content.addEventListener(MouseEvent.MOUSE_DOWN, onBackgroundMouseDown)
+			this.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel)
 		}
 		
 		///移除所有侦听器
 		public function removeUiListener():void
 		{
+			this.removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel)
 			sp_pointer.removeEventListener(MouseEvent.MOUSE_DOWN, onPointerMouseDown)
 			sp_pointer.removeEventListener(MouseEvent.MOUSE_OVER, onPointerMouseOver)
 			sp_pointer.removeEventListener(MouseEvent.MOUSE_OUT, onPointerMouseOut)
@@ -127,10 +130,25 @@ package com.lizeqiangd.zweisystem.interfaces.scrollbar
 		private function onDragPointer(e:Event = null):void
 		{
 			//TweenLite.to(sp_pointer, 0.5, {y: sp_background.mouseY - onMouseDownYPosition})
+			if (sp_background.mouseY - onMouseDownYPosition == sp_pointer.y)
+			{
+				return
+			}
 			sp_pointer.y = sp_background.mouseY - onMouseDownYPosition
 			judgeBoundary()
-			
 			dispatchPostition()
+		}
+		
+		///滚轮滚动操作
+		private function onMouseWheel(e:MouseEvent):void
+		{
+			onMouseWheelHandle(e.delta)
+		}
+		
+		//方便外部使用.
+		public function onMouseWheelHandle(delta:Number):void
+		{
+			setNowDisplayTop = (nowPosition - delta * mouseWheelMultiple)
 		}
 		
 		///鼠标经过时候的效果
@@ -149,14 +167,12 @@ package com.lizeqiangd.zweisystem.interfaces.scrollbar
 			//trace(sp_background.mouseY, sp_pointer.y, _pointerHeight, _speed)
 			if (sp_background.mouseY > sp_pointer.y + _pointerHeight)
 			{ //trace("onBackgroundMouseDown1")
-				setNowDisplayTop = nowPosition + _speed
+				displayTop = nowPosition + _speed
 			}
-			
 			if (sp_background.mouseY < sp_pointer.y)
 			{ //trace("onBackgroundMouseDown2")
-				setNowDisplayTop = nowPosition - _speed
+				displayTop = nowPosition - _speed
 			}
-			
 			judgeBoundary()
 			dispatchPostition()
 		}
@@ -189,17 +205,19 @@ package com.lizeqiangd.zweisystem.interfaces.scrollbar
 		private function recalculatePointerHeight():void
 		{
 			_pointerHeight = _displayHeight * _displayHeight / _totalHeight
+			//判断尺寸是否符合规格.
 			_pointerHeight = _pointerHeight < ScrollbarPointerMinimumHeight ? ScrollbarPointerMinimumHeight : _pointerHeight
 			createPointer()
-			setNowDisplayTop = (nowPosition)
+			//nowDisplayTop = (nowPosition)
 			judgeBoundary()
 		}
 		
 		///发布自身位置变动。为UnitEvent.CHANGE事件
 		private function dispatchPostition():void
 		{
-			nowPosition = sp_pointer.y / (sp_background.height - sp_pointer.height) * (_totalHeight - _displayHeight)
+			//nowPosition = sp_pointer.y / (sp_background.height - sp_pointer.height) * (_totalHeight - _displayHeight)
 			//trace(nowPosition)
+			nowPosition = sp_pointer.y / (sp_background.height - sp_pointer.height) * (_totalHeight - _displayHeight)
 			this.dispatchEvent(new UIEvent(UIEvent.CHANGE, nowPosition))
 		}
 		
@@ -236,25 +254,43 @@ package com.lizeqiangd.zweisystem.interfaces.scrollbar
 		{
 			_totalHeight = value
 			_speed = _totalHeight / ScrollbarScrollSpeedDenominator
-			judgeNecessary()
 			recalculatePointerHeight()
+			judgeNecessary()
 		}
 		
 		///设置显示高度,立刻更新滑块
 		public function set setDisplayHeight(value:Number):void
 		{
 			_displayHeight = value
-			judgeNecessary()
 			recalculatePointerHeight()
+			judgeNecessary()
 		}
 		
-		///设置滑块目前位置
-		public function set setNowDisplayTop(value:Number):void
+		///内部应用.设置后会修改y属性.
+		private function set displayTop(value:Number):void
 		{
-			sp_pointer.y = value / (_totalHeight - _displayHeight) * (sp_background.height - sp_pointer.height)
 			nowPosition = value
+			sp_pointer.y = value / (_totalHeight - _displayHeight) * (sp_background.height - sp_pointer.height)
 			judgeBoundary()
 		}
+		
+		///设置滑块目前位置(绝对高度位置,如果是行,请自行计算行高)
+		public function set setNowDisplayTop(value:Number):void
+		{
+			if (value < 0) value = 0
+			if (value > _totalHeight) value = _totalHeight
+			displayTop = value;
+			this.dispatchEvent(new UIEvent(UIEvent.CHANGE, nowPosition))
+		}
+		
+		///获取滑块目前位置
+		public function get getNowDisplayTop():Number
+		{
+			return nowPosition;
+		}
+		
+		///用于滚动使用的倍数(可用于行高)
+		public var mouseWheelMultiple:Number = 20;
 	}
 
 }

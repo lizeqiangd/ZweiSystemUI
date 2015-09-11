@@ -6,7 +6,6 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 	import com.lizeqiangd.zweisystem.interfaces.baseunit.datagird.iDataGirdRow;
 	import com.lizeqiangd.zweisystem.system.config.ESTextFormat;
 	import flash.text.TextFormat;
-	import com.greensock.TweenLite;
 	import flash.display.Sprite;
 	import flash.events.EventDispatcher;
 	import flash.events.MouseEvent;
@@ -15,7 +14,6 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 	/**
 	 * lizeqiangd@gmail.com
 	 * @author Lizeqiangd
-	 * 弹幕列表中的标题栏
 	 */
 	public class dgr_defaultDataGirdRow extends BaseDataGirdRow implements iDataGirdRow
 	{
@@ -23,7 +21,10 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 		private var tx_1:TextField
 		private var tx_2:TextField
 		private var tx_3:TextField
-				
+		
+		/**
+		 * this width is 290.
+		 */
 		public function dgr_defaultDataGirdRow()
 		{
 			tx_1 = new TextField
@@ -34,11 +35,11 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 			tx_2.mouseEnabled = false
 			tx_3.mouseEnabled = false
 			
-			tx_1.defaultTextFormat = ESTextFormat.LightBlueTitleTextFormat// BPTextFormat.DataGirdCommentRowTextFormat
-			tx_2.defaultTextFormat = ESTextFormat.LightBlueTitleTextFormat// BPTextFormat.DataGirdCommentRowTextFormat
 			var tf:TextFormat = ESTextFormat.LightBlueTitleTextFormat
-			tf.align='left'
-			tx_3.defaultTextFormat =tf//  BPTextFormat.DataGirdCommentRowTextFormat
+			tf.align = 'left'
+			tx_1.defaultTextFormat = tf// BPTextFormat.DataGirdCommentRowTextFormat
+			tx_2.defaultTextFormat = tf// BPTextFormat.DataGirdCommentRowTextFormat
+			tx_3.defaultTextFormat = tf//  BPTextFormat.DataGirdCommentRowTextFormat
 			
 			tx_1.text = ""
 			tx_2.text = ""
@@ -49,29 +50,31 @@ package com.lizeqiangd.zweisystem.interfaces.datagird
 			tx_3.y = 2
 			
 			tx_1.x = 2
-			tx_1.width = 30
-			tx_2.x = 32
-			tx_2.width = 20
-			tx_3.defaultTextFormat.align='left'
-			tx_3.x = 52
-			tx_3.width = 238
+			tx_1.width = 60
+			tx_2.x = tx_1.width + 2
+			tx_2.width = 60
+			tx_3.defaultTextFormat.align = 'left'
+			tx_3.x = tx_2.x + tx_2.width + 2
+			tx_3.width = 290 - 70 - 50 - 4
 			
 			addChild(tx_1)
 			addChild(tx_2)
-			addChild(tx_3)			
+			addChild(tx_3)
 		}
 		
 		public function update():void
 		{
 			if (data[indexInDataGird])
 			{
-				//tx_1.text = data[indexInDataGird].id + ""
-				//tx_2.text = data[indexInDataGird].type + ""
-				//tx_3.text =data[indexInDataGird].title			
-			}else {
+				tx_1.text = data[indexInDataGird]['id'] + ""
+				tx_2.text = data[indexInDataGird]['type'] + ""
+				tx_3.text = data[indexInDataGird]['time'] + ""
+			}
+			else
+			{
 				tx_1.text = ''
-				tx_2.text =''
-				tx_3.text =''
+				tx_2.text = ''
+				tx_3.text = ''
 			}
 			cherkSelected()
 		}

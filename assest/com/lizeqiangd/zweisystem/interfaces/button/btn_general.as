@@ -13,7 +13,7 @@
 	{
 		public function btn_general()
 		{
-			super(true)
+			super()
 		}
 	}
 }
