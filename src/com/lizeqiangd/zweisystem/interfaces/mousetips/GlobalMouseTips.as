@@ -51,14 +51,7 @@ package com.lizeqiangd.zweisystem.interfaces.mousetips
 			_stage.addEventListener(Event.ADDED, onSomethingAddToStage)
 		}
 		
-		/**
-		 * 重新恢复至舞台顶层
-		 * @param	e
-		 */
-		static private function onSomethingAddToStage(e:Event):void
-		{
-			//_stage.setChildIndex(mt, _stage.numChildren -1);
-		}
+		
 		
 		/**
 		 * 直接设置信息
@@ -67,24 +60,24 @@ package com.lizeqiangd.zweisystem.interfaces.mousetips
 		 * @param	y 舞台的y
 		 * @param	autoFixPosition 是否自动修正x坐标以防超出舞台
 		 */
-		public static function setTips(text:String, x:Number, y:Number, autoFixPosition:Boolean = false):void
+		public static function setTips(text:*, x:Number, y:Number, autoFixPosition:Boolean = false):void
 		{
 			if (!isinited)
 			{
 				//trace('GloablMouseTips:need init')
 				return
 			}
-			mt.text = text;
-			var mt_y:Number = y
-			var mt_x:Number = x
+			mt.text = text.toString();
+			var mt_y:Number = y;
+			var mt_x:Number = x;
 			if (autoFixPosition)
 			{
-				mt_x = mt_x > _stage.stageWidth - mt.width ? _stage.stageWidth - mt.width - 5 : mt_x
-				mt_x = mt_x < 0 ? 0 : mt_x
+				mt_x = mt_x > _stage.stageWidth - mt.width ? _stage.stageWidth - mt.width - 5 : mt_x;
+				mt_x = mt_x < 0 ? 0 : mt_x;
 			}
-			mt.x = mt_x
-			mt.y = mt_y
-			showMouseTips()
+			mt.x = mt_x;
+			mt.y = mt_y;
+			showMouseTips();
 		}
 		
 		/**
@@ -94,34 +87,34 @@ package com.lizeqiangd.zweisystem.interfaces.mousetips
 		 * @param	text 内容文字.
 		 * @param	display 需要附着的对象.
 		 */
-		public static function setTipsByDisplayObject(text:String, display:DisplayObject):void
+		public static function setTipsByDisplayObject(text:*, display:DisplayObject):void
 		{
 			if (!isinited)
 			{
 				//trace('GloablMouseTips:need init')
 				return
 			}
-			mt.text = text
-			var mt_y:Number = (display.y + display.height + 2)
-			var mt_x:Number = display.x + display.height / 2 - mt.width / 2
-			var temp_display:DisplayObject = display.parent
+			mt.text = text.toString();
+			var mt_y:Number = (display.y + display.height + 2);
+			var mt_x:Number = display.x + display.height / 2 - mt.width / 2;
+			var temp_display:DisplayObject = display.parent;
 			//最多10层嵌套
 			for (var i:int = 0; i < 10; i++)
 			{
 				if (temp_display != _stage)
 				{
-					mt_y += temp_display.y
-					mt_x += temp_display.x
-					temp_display = temp_display.parent
+					mt_y += temp_display.y;
+					mt_x += temp_display.x;
+					temp_display = temp_display.parent;
 				}
 			}
 			
-			mt_y = mt_y > _stage.stageHeight + mt.height ? display.y - 2 - mt.height : mt_y
-			mt_x = mt_x > _stage.stageWidth - mt.width ? _stage.stageWidth - mt.width - 5 : mt_x
-			mt_x = mt_x < 0 ? 0 : mt_x
-			mt.x = mt_x
-			mt.y = mt_y
-			showMouseTips()
+			mt_y = mt_y > _stage.stageHeight + mt.height ? display.y - 2 - mt.height : mt_y;
+			mt_x = mt_x > _stage.stageWidth - mt.width ? _stage.stageWidth - mt.width - 5 : mt_x;
+			mt_x = mt_x < 0 ? 0 : mt_x;
+			mt.x = mt_x;
+			mt.y = mt_y;
+			showMouseTips();
 		}
 		
 		/**
@@ -147,7 +140,14 @@ package com.lizeqiangd.zweisystem.interfaces.mousetips
 			//}, 25)
 			//hideTimer.stop()
 		}
-		
+		/**
+		 * 重新恢复至舞台顶层
+		 * @param	e
+		 */
+		static private function onSomethingAddToStage(e:Event):void
+		{
+			//_stage.setChildIndex(mt, _stage.numChildren -1);
+		}
 		static private function onHideTimerComplete(e:TimerEvent):void
 		{
 			clearInterval(hide_anime_timeout);
